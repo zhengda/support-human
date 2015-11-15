@@ -5,7 +5,11 @@
     z-index -1
     content ""
     display block
-    padding-top calc(100% + 70px)
+    padding-top calc(100% + 100px)
+
+  @media screen and (min-width: 640px)
+    &:after
+      padding-top 100%
 
   #user_image,
   #cover_image
@@ -29,6 +33,8 @@
     .inner
       img
         position absolute
+        top 0
+        left 0
         width 100%
         opacity 0
 

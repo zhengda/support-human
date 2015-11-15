@@ -207,13 +207,23 @@ px2int = function(string) {
 };
 
 $(window).load(function() {
-  var container_size, userimage_size;
+  var active, container_size, html, i, j, userimage_size;
+  for (i = j = 1; j <= 24; i = ++j) {
+    if (i === 1) {
+      active = ' active';
+    } else {
+      active = '';
+    }
+    html = '<label class="template-label ' + active + '" style="background-image: url(images/sample.jpg);"><img src="images/flag/' + i + '.png"><input type="radio" name="template" value="' + i + '" autocomplete="off" checked="checked"></label>';
+    $('#templates').append(html);
+  }
   container_size = $userimage.width();
   userimage_size = getImgSize(getBackgroundImage($userimage));
   return resizeDragger(userimage_size, container_size);
 });
 
 $(document).ready(function() {
+  var dropZone;
   $('body').iealert({
     support: 'ie9',
     closeBtn: false,
@@ -254,6 +264,12 @@ $(document).ready(function() {
       });
     }
   });
+  $('body').delegate('#templates', 'mouseover', function() {
+    return $('#dashboard_container').css('overflow-y', 'hidden');
+  });
+  $('body').delegate('#templates', 'mouseout', function() {
+    return $('#dashboard_container').css('overflow-y', 'auto');
+  });
   $('body').delegate('input[name=template]', 'change', function() {
     var url, value, width;
     $('.template-label').removeClass('active');
@@ -262,6 +278,7 @@ $(document).ready(function() {
     value = $(this).val();
     url = 'images/flag/' + value + '.png';
     $coverimage.css('background-image', 'url(' + url + ')');
+    $('#cover_image img').attr('src', url);
     if ($userimage.hasClass('dragged') === true) {
       $userimage.attr('class', 'inner dragged');
     } else {
@@ -274,7 +291,7 @@ $(document).ready(function() {
       return resizeDragger(size, container_size, value);
     });
   });
-  return $('#download_button').click(function() {
+  $('#download_button').click(function() {
     var basesize, h, position, scale, size, source, template, w, x, y;
     basesize = $userimage.width();
     size = getBackgroundSize($userimage.css('background-size'));
@@ -288,10 +305,6 @@ $(document).ready(function() {
     y = position[1] / scale;
     return createImage(template, source, x, y, w, h);
   });
-});
-
-$(function() {
-  var dropZone;
   dropZone = document.getElementById('drop');
   dropZone.addEventListener('dragover', handleDragOver, false);
   dropZone.addEventListener('drop', handleFileSelect, false);

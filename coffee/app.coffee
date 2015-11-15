@@ -190,6 +190,11 @@ px2int = (string) ->
 
 
 $(window).load ->
+  for i in [1..24]
+    if i is 1 then active = ' active' else active = ''
+    html = '<label class="template-label '+active+'" style="background-image: url(images/sample.jpg);"><img src="images/flag/'+i+'.png"><input type="radio" name="template" value="'+i+'" autocomplete="off" checked="checked"></label>'
+    $('#templates').append html
+
   container_size = $userimage.width()
   userimage_size = getImgSize(getBackgroundImage($userimage))
   resizeDragger userimage_size, container_size
@@ -229,6 +234,12 @@ $(document).ready ->
         $dragger.css('width', width + 'px').css('height', height + 'px').css('top', top + 'px').css 'left', left + 'px'
         $userimage.css('background-size', width + 'px ' + height + 'px').css 'background-position', left + 'px ' + top + 'px'
 
+  $('body').delegate '#templates', 'mouseover', ->
+    $('#dashboard_container').css 'overflow-y', 'hidden'
+
+  $('body').delegate '#templates', 'mouseout', ->
+    $('#dashboard_container').css 'overflow-y', 'auto'
+
   $('body').delegate 'input[name=template]', 'change', ->
     $('.template-label').removeClass 'active'
     $(this).parents('.template-label').addClass 'active'
@@ -236,6 +247,7 @@ $(document).ready ->
     value = $(this).val()
     url = 'images/flag/' + value + '.png'
     $coverimage.css 'background-image', 'url(' + url + ')'
+    $('#cover_image img').attr 'src', url
     if $userimage.hasClass('dragged') == true
       $userimage.attr 'class', 'inner dragged'
     else
@@ -261,7 +273,6 @@ $(document).ready ->
     y = position[1] / scale
     createImage template, source, x, y, w, h
 
-$ ->
   dropZone = document.getElementById('drop')
   dropZone.addEventListener 'dragover', handleDragOver, false
   dropZone.addEventListener 'drop', handleFileSelect, false
