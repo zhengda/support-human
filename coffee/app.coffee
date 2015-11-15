@@ -273,9 +273,9 @@ $(document).ready ->
     y = position[1] / scale
     createImage template, source, x, y, w, h
 
-  dropZone = document.getElementById('drop')
-  dropZone.addEventListener 'dragover', handleDragOver, false
-  dropZone.addEventListener 'drop', handleFileSelect, false
+  # dropZone = document.getElementById('drop')
+  # dropZone.addEventListener 'dragover', handleDragOver, false
+  # dropZone.addEventListener 'drop', handleFileSelect, false
   $('.upload-button').click ->
     $('#upload_input').click()
 

@@ -223,7 +223,6 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
-  var dropZone;
   $('body').iealert({
     support: 'ie9',
     closeBtn: false,
@@ -305,9 +304,6 @@ $(document).ready(function() {
     y = position[1] / scale;
     return createImage(template, source, x, y, w, h);
   });
-  dropZone = document.getElementById('drop');
-  dropZone.addEventListener('dragover', handleDragOver, false);
-  dropZone.addEventListener('drop', handleFileSelect, false);
   $('.upload-button').click(function() {
     return $('#upload_input').click();
   });
