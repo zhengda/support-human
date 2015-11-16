@@ -246,5 +246,5 @@ $(document).ready ->
 
   $('#upload_input').on 'change', ->
     input = document.getElementById('upload_input')
-    console.log input.files
     loadImage input.files
+    $sizer.slider 'value', 100

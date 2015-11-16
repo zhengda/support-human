@@ -275,7 +275,7 @@ $(document).ready(function() {
   return $('#upload_input').on('change', function() {
     var input;
     input = document.getElementById('upload_input');
-    console.log(input.files);
-    return loadImage(input.files);
+    loadImage(input.files);
+    return $sizer.slider('value', 100);
   });
 });
