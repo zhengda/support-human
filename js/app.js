@@ -1,4 +1,4 @@
-var $coverimage, $dragger, $loading, $sizer, $uploading, $userimage, createImage, getBackgroundCenterPoint, getBackgroundImage, getBackgroundPosition, getBackgroundSize, getImgSize, handleDragOver, handleFileSelect, loadImage, px2int, resizeDragger;
+var $coverimage, $dragger, $loading, $sizer, $uploading, $userimage, createImage, getBackgroundCenterPoint, getBackgroundImage, getBackgroundPosition, getBackgroundSize, getImgSize, handleDragOver, handleFileSelect, isMobile, loadImage, px2int, resizeDragger;
 
 $userimage = $('#user_image .inner');
 
@@ -174,6 +174,10 @@ px2int = function(string) {
   return parseFloat(string.replace('px', ''));
 };
 
+isMobile = function() {
+  return navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/BlackBerry/);
+};
+
 $(window).load(function() {
   var active, container_size, html, i, j, userimage_size;
   for (i = j = 1; j <= 24; i = ++j) {
@@ -228,12 +232,14 @@ $(document).ready(function() {
       });
     }
   });
-  $('body').delegate('#templates', 'mouseover', function() {
-    return $('#dashboard_container').css('overflow-y', 'hidden');
-  });
-  $('body').delegate('#templates', 'mouseout', function() {
-    return $('#dashboard_container').css('overflow-y', 'auto');
-  });
+  if (!isMobile) {
+    $('body').delegate('#templates', 'mouseover', function() {
+      return $('#dashboard_container').css('overflow-y', 'hidden');
+    });
+    $('body').delegate('#templates', 'mouseout', function() {
+      return $('#dashboard_container').css('overflow-y', 'auto');
+    });
+  }
   $('body').delegate('input[name=template]', 'change', function() {
     var url, value, width;
     $('.template-label').removeClass('active');

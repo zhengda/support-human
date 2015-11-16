@@ -159,7 +159,8 @@ getBackgroundCenterPoint = (size, position) ->
 px2int = (string) ->
   parseFloat string.replace('px', '')
 
-
+isMobile = ->
+  navigator.userAgent.match(/Android/i) or navigator.userAgent.match(/webOS/i) or navigator.userAgent.match(/iPhone/i) or navigator.userAgent.match(/iPod/i) or navigator.userAgent.match(/iPad/i) or navigator.userAgent.match(/BlackBerry/)
 
 $(window).load ->
   for i in [1..24]
@@ -203,12 +204,12 @@ $(document).ready ->
         top = center[1] - (height * 0.5)
         $dragger.css('width', width + 'px').css('height', height + 'px').css('top', top + 'px').css 'left', left + 'px'
         $userimage.css('background-size', width + 'px ' + height + 'px').css 'background-position', left + 'px ' + top + 'px'
+  if !isMobile
+    $('body').delegate '#templates', 'mouseover', ->
+      $('#dashboard_container').css 'overflow-y', 'hidden'
 
-  $('body').delegate '#templates', 'mouseover', ->
-    $('#dashboard_container').css 'overflow-y', 'hidden'
-
-  $('body').delegate '#templates', 'mouseout', ->
-    $('#dashboard_container').css 'overflow-y', 'auto'
+    $('body').delegate '#templates', 'mouseout', ->
+      $('#dashboard_container').css 'overflow-y', 'auto'
 
   $('body').delegate 'input[name=template]', 'change', ->
     $('.template-label').removeClass 'active'
