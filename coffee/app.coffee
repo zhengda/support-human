@@ -204,7 +204,8 @@ $(document).ready ->
         top = center[1] - (height * 0.5)
         $dragger.css('width', width + 'px').css('height', height + 'px').css('top', top + 'px').css 'left', left + 'px'
         $userimage.css('background-size', width + 'px ' + height + 'px').css 'background-position', left + 'px ' + top + 'px'
-  if !isMobile
+
+  if !isMobile()
     $('body').delegate '#templates', 'mouseover', ->
       $('#dashboard_container').css 'overflow-y', 'hidden'
 

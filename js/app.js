@@ -232,7 +232,7 @@ $(document).ready(function() {
       });
     }
   });
-  if (!isMobile) {
+  if (!isMobile()) {
     $('body').delegate('#templates', 'mouseover', function() {
       return $('#dashboard_container').css('overflow-y', 'hidden');
     });
