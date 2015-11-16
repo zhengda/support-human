@@ -133,34 +133,6 @@ resizeDragger = (size, wrapper, value, upload) ->
     height = size[1] * scale
     top = (height - wrapper) * 0.5 * -1
     left = 0
-  if value == 6
-    left = wrapper * 0.2 * -1
-    if size[0] > size[1]
-      left -= (width - wrapper) * 0.5
-  else if value == 9
-    $sizer.slider 'value', 65
-    if size[0] > size[1]
-      left = wrapper * 0.65 * 0.13 * 0.5
-      width *= 0.65
-      height *= 0.65
-      top = (wrapper - height) * 0.48
-    else
-      left = wrapper * 0.65 * 0.13 * 0.5
-      width *= 0.65
-      height *= 0.65
-      top = (wrapper - height) * 0.48
-  else if value == 10
-    $sizer.slider 'value', 92
-    if size[0] > size[1]
-      width = wrapper * 0.92
-      height = width * size[1] / size[0]
-      top = wrapper * 0.045
-      left = (wrapper - width) * 0.5
-    else
-      width = width * 0.92
-      height = height * 0.92
-      top = wrapper * 0.045
-      left = (wrapper - width) * 0.5
   $dragger.css('width', width + 'px').css('height', height + 'px').css('top', top + 'px').css 'left', left + 'px'
   $userimage.css('background-size', width + 'px ' + height + 'px').css 'background-position', left + 'px ' + top + 'px'
 
@@ -208,11 +180,9 @@ $(document).ready ->
 
   $dragger.draggable drag: (event) ->
     $userimage.css 'background-position', $dragger.css('left') + ' ' + $dragger.css('top')
-    if $userimage.hasClass('dragged') == false
+    if !$userimage.hasClass('dragged')
       $userimage.addClass 'dragged'
     value = $('input[name=template]:checked').val()
-    if value == 9 or value == 10
-      $userimage.attr 'class', 'inner'
 
   $sizer.slider
     value: 100
@@ -248,17 +218,10 @@ $(document).ready ->
     url = 'images/flag/' + value + '.png'
     $coverimage.css 'background-image', 'url(' + url + ')'
     $('#cover_image img').attr 'src', url
-    if $userimage.hasClass('dragged') == true
+    if $userimage.hasClass('dragged')
       $userimage.attr 'class', 'inner dragged'
     else
       $userimage.attr 'class', 'inner'
-    $('<img/>').attr('src', getBackgroundImage($userimage)).load ->
-      size = [
-        @width
-        @height
-      ]
-      container_size = $userimage.width()
-      resizeDragger size, container_size, value
 
   $('#download_button').click ->
     basesize = $userimage.width()
